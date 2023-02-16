@@ -28,6 +28,10 @@ void bubbleSort(int arr[], int n)
     }
 }
 
+//worst case:-  O(n^2)
+//average case:-  O(n^2)
+//best case:-  O(n^2)
+
 void optimizedBubbleSort(int arr[], int n)
 {
     for(int i = 0; i<n-1; i++)
@@ -50,12 +54,16 @@ void optimizedBubbleSort(int arr[], int n)
         }
     }
 }
+//worst case:-  O(n^2)
+//average case:-  O(n^2)
+//best case:-  O(n)
+
 
 int main()
 {
     system("cls");
-    int arr[] = {9, 1, 7, 2};
     int arr2[] = {1, 2, 3, 4};
+    int arr[] = {9, 1, 7, 2};
     int n = sizeof(arr)/sizeof(arr[0]);
     int m = sizeof(arr2)/sizeof(arr2[0]);
     printArray(arr, n);
