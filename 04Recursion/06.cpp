@@ -38,6 +38,7 @@ int main()
     system("cls");
     int arr[] = {5, 4, 3, 2, 1};
     int n = sizeof(arr)/sizeof(arr[0]);
-    cout<<isSortedInDesc(arr, n);
+    //cout<<isSortedInDesc(arr, n);
+    
     return 0;
 }
