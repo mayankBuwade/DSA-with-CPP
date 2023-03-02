@@ -7,6 +7,7 @@ bool ratInAMaze(char arr[][10], int sol[][10], int i, int j, int m, int n)
 {
     if(i == m && j == n)
     {
+        sol[i][j] = 1;
         for(int k = 0; k<=m; k++)
         {
             for(int l = 0; l<=n; l++)
@@ -16,6 +17,7 @@ bool ratInAMaze(char arr[][10], int sol[][10], int i, int j, int m, int n)
             cout<<endl;
         }
         cout<<endl;
+        sol[i][j] = 0;
         return true;
     }
     if(arr[i][j] == 'X') return false;
@@ -34,13 +36,12 @@ int main()
 {
     system("cls");
     char arr[10][10] = {
-        "0000",
-        "000X",
-        "00X0",
-        "0000"
+        "0X0",
+        "000",
+        "0X0",
     };
     int sol[10][10] = {0};
-    int m = 4, n = 4;
+    int m = 3, n = 3;
     bool foundPaths = ratInAMaze(arr, sol,  0, 0, m-1, n-1);
     if(!foundPaths) cout<<"No path found"<<endl;
     return 0;
