@@ -1,4 +1,4 @@
-//
+//singly linked list
 #include<iostream>
 
 using namespace std;
@@ -31,6 +31,7 @@ public:
     int get(int);
     void addAtIndex(int, int);
     void deleteAtIndex(int);
+    void deleteLinkedList();
 };
 
 LinkedList::LinkedList()
@@ -141,6 +142,19 @@ void LinkedList::deleteAtIndex(int index)
     }
 }
 
+void LinkedList::deleteLinkedList()
+{
+    while(head)
+    {
+        Node *deleteNode = head;
+        head = head->next;
+        delete deleteNode;
+    }
+    totalNodes = 0;
+    head = NULL;
+    tail = NULL;
+}
+
 int main()
 {
     system("cls");
@@ -150,9 +164,13 @@ int main()
     l1.addAtTail(7);
     l1.addAtTail(15);
     l1.addAtHead(99);
-    l1.printLS();
     l1.deleteAtIndex(4);
     l1.addAtTail(909);
+    l1.printLS();
+    l1.deleteLinkedList();
+    l1.printLS();
+    l1.addAtTail(5);
+    l1.addAtTail(15);
     l1.printLS();
     return 0;
 }
