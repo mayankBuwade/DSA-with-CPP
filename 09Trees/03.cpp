@@ -1,5 +1,6 @@
-//level order traversal
+//in-order traversal
 #include<iostream>
+#include<stack>
 #include<queue>
 
 using namespace std;
@@ -21,10 +22,12 @@ public:
 class BT {
 private:
     Node *root;
+    void preOrderTraversalRec(Node*);
+    void preOrderTraversalLoop();
 public:
     BT();
     void insertLevelWise(int);
-    void levelOrderTraversal();
+    void preOrderTraversal();
 };
 
 BT::BT() {
@@ -65,22 +68,39 @@ void BT::insertLevelWise(int val)
     }
 }
 
-void BT::levelOrderTraversal()
+void BT::preOrderTraversal()
 {
-    if(root == NULL) return;
-    queue<Node *> q;
-    q.push(root);
-    while (!q.empty())
-    {
-        Node *temp = q.front();
-        q.pop();
-        cout<<temp->val<<" ";
-        if(temp->left != NULL) q.push(temp->left);
-        if(temp->right != NULL) q.push(temp->right);
-    }
-    
+    //preOrderTraversalRec(root);
+    preOrderTraversalLoop();
 }
 
+void BT::preOrderTraversalRec(Node *temp)
+{
+    if(temp == NULL) return;
+    cout<<temp->val<<" ";
+    preOrderTraversalRec(temp->left);
+    preOrderTraversalRec(temp->right);
+}
+
+void BT::preOrderTraversalLoop()
+{
+    Node *temp = root;
+    stack<Node *> s;
+
+    while(true)
+    {
+        while (temp != NULL)
+        {
+            cout<<temp->val<<" ";
+            s.push(temp);
+            temp = temp->left;
+        }
+        if(s.empty()) return;
+        temp = s.top();
+        s.pop();
+        temp = temp->right; 
+    }
+}
 
 int main()
 {
@@ -91,7 +111,6 @@ int main()
     b.insertLevelWise(3);
     b.insertLevelWise(4);
     b.insertLevelWise(5);
-    b.levelOrderTraversal();
-    cout<<endl;
+    b.preOrderTraversal();
     return 0;
 }
