@@ -1,4 +1,4 @@
-//pre-order traversal
+//post-order traversal
 #include<iostream>
 #include<stack>
 #include<queue>
@@ -22,12 +22,12 @@ public:
 class BT {
 private:
     Node *root;
-    void preOrderTraversalRec(Node*);
-    void preOrderTraversalLoop();
+    void postOrderTraversalRec(Node*);
+    void postOrderTraversalLoop();
 public:
     BT();
     void insertLevelWise(int);
-    void preOrderTraversal();
+    void postOrderTraversal();
 };
 
 BT::BT() {
@@ -68,38 +68,49 @@ void BT::insertLevelWise(int val)
     }
 }
 
-void BT::preOrderTraversal()
+void BT::postOrderTraversal()
 {
-    //preOrderTraversalRec(root);
-    preOrderTraversalLoop();
+    //postOrderTraversalRec(root); 
+    postOrderTraversalLoop();
 }
 
-void BT::preOrderTraversalRec(Node *temp)
+void BT::postOrderTraversalRec(Node *temp)
 {
     if(temp == NULL) return;
+    postOrderTraversalRec(temp->left);
+    postOrderTraversalRec(temp->right);
     cout<<temp->val<<" ";
-    preOrderTraversalRec(temp->left);
-    preOrderTraversalRec(temp->right);
 }
 
-void BT::preOrderTraversalLoop()
+void BT::postOrderTraversalLoop()
 {
-    Node *temp = root;
-    stack<Node *> s;
-
-    while(true)
+   Node *temp = root;
+   Node *prev = NULL;
+   stack<Node *> s;
+    do
     {
-        while (temp != NULL)
+        while(temp != NULL)
         {
-            cout<<temp->val<<" ";
             s.push(temp);
             temp = temp->left;
         }
-        if(s.empty()) return;
-        temp = s.top();
-        s.pop();
-        temp = temp->right; 
-    }
+
+        while(temp == NULL && !s.empty())
+        {
+            temp = s.top();
+            if(temp->right == NULL || temp->right == prev)
+            {
+                cout<<temp->val<<" ";
+                s.pop();
+                prev = temp;
+                temp = NULL;
+            }
+            else
+            {
+                temp = temp->right;
+            } 
+        }
+    } while(!s.empty());
 }
 
 int main()
@@ -111,6 +122,6 @@ int main()
     b.insertLevelWise(3);
     b.insertLevelWise(4);
     b.insertLevelWise(5);
-    b.preOrderTraversal();
+    b.postOrderTraversal();
     return 0;
 }
