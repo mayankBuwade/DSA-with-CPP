@@ -2,6 +2,7 @@
 //Insertion
 #include <iostream>
 #include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ public:
 class BST {
 private:
     Node *root;
+    Node* deleteNodeH(Node *root, int val);
+    Node* findMaxH(Node *);
 public:
     BST();
     void insert(int);
@@ -28,6 +31,7 @@ public:
     bool isExist(int);
     int findMin();
     int findMax();
+    void deleteNode(int val);
 };
 
 BST::BST()
@@ -114,8 +118,7 @@ int BST::findMin()
         }
         temp = temp->left;
     }
-    return temp->val;
-    
+    return temp->val;  
 }
 
 int BST::findMax()
@@ -138,19 +141,85 @@ int BST::findMax()
     
 }
 
+Node* BST::findMaxH(Node *root)
+{
+    if(root == NULL)
+    {
+        return NULL;
+    }
+    Node *temp = root;
+    while(temp)
+    {
+        if(temp->right == NULL)
+        {
+            break;
+        }
+        temp = temp->right;
+    }
+    return temp;
+}
+
+void  BST::deleteNode(int val)
+{
+    root = deleteNodeH(root, val);
+}
+
+
+Node* BST::deleteNodeH(Node *root, int val)
+{
+    Node *temp;
+    if(root == NULL)
+    {
+        cout<<"Element not found"<<endl;
+    }
+    else if(val < root->val)
+    {
+        root->left = deleteNodeH(root->left, val);
+    }
+    else if(val > root->val)
+    {
+        root->right = deleteNodeH(root->right, val);
+    }
+    else {
+        if(root->left && root->right)
+        {
+            temp = findMaxH(root->left);
+            root->val = temp->val;
+            root->left = deleteNodeH(root->left, root->val);
+        }
+        else
+        {
+            //one child
+            temp = root;
+            if(root->left == NULL)
+            {
+                root = root->right;
+            }
+            else if(root->right == NULL)
+            {
+                root = root->left;
+            }
+            delete temp;
+        }
+    }
+    return root;
+}
+
 int main()
 {
     system("cls");
     BST bst;
-    bst.insert(8);
+    bst.insert(5);
+    bst.insert(2);
+    bst.insert(9);
+    bst.insert(20);
     bst.insert(7);
-    bst.insert(99);
-    bst.insert(-1);
-    bst.insert(101);
-    bst.insert(57);
-    bst.insert(-2000);
-    bst.insert(2000);
-    cout<<bst.findMin()<<endl;
-    cout<<bst.findMax()<<endl;
+    bst.insert(8);
+    bst.insert(6);
+    bst.levelOrderTraversal();
+    bst.deleteNode(5);
+    bst.levelOrderTraversal();
+    // cout<<bst.findMin()<<endl;
+    // cout<<bst.findMax()<<endl;
     return 0;
 }
