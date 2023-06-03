@@ -26,17 +26,17 @@ public:
 
     void printGraph() {
         for(int i = 1; i<numVertices+1; i++)
-    {
-        printf("Vertex:- %d:- ", i);
-        for(int j = 1; j<numVertices+1; j++)
         {
-            if(adjacencyMatrix[i][j] != INT_MAX)
+            printf("Vertex:- %d:- ", i);
+            for(int j = 1; j<numVertices+1; j++)
             {
-                cout<<"( "<<j<<", "<<adjacencyMatrix[i][j]<<" ), ";
+                if(adjacencyMatrix[i][j] != INT_MAX)
+                {
+                    cout<<"( "<<j<<", "<<adjacencyMatrix[i][j]<<" ), ";
+                }
             }
+            cout<<endl;
         }
-        cout<<endl;
-    }
     }
 };
 
