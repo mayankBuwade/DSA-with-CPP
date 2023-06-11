@@ -1,7 +1,8 @@
-//check cycle undirected:- BFS
+//check cycle undirected:- DFS
 
 #include<iostream>
 #include<vector>
+#include<stack>
 #include<queue>
 
 using namespace std;
@@ -9,6 +10,7 @@ using namespace std;
 class Graph {
 private:
     vector<vector<int>> adjList;
+    bool dfsDetectCycleHelper(int, vector<bool>&);
 public:
     Graph(int);
     void addEdge(int, int);
@@ -41,33 +43,33 @@ void Graph::printGraph()
 }
 
 
-
 bool Graph::haveCycle(int src)
 {
     int size = adjList.size();
     vector<bool> visited(size, false);
-    queue<pair<int, int>> q;
-    q.push({src, -1});
-    visited[src] = true;
-    while(!q.empty())
+    stack<pair<int, int>> s;
+    s.push({src, -1});
+    while (!s.empty())
     {
-        int node = q.front().first;
-        int parent = q.front().second;
-        q.pop();
-        for(auto ele:adjList[node])
+        int node = s.top().first;
+        int parent = s.top().second;
+        s.pop();
+        for(auto adjN:adjList[node])
         {
-            if(ele != parent && !visited[ele])
+            if(adjN != parent && !visited[adjN])
             {
-                q.push({ele, node});
-                visited[ele] = true;
+                s.push({adjN, node});
+                visited[adjN] = true;
             }
-            else if(ele != parent && visited[ele])
+            else if(adjN != parent && visited[adjN])
             {
                 return true;
             }
         }
     }
+
     return false;
+    
 }
 
 
@@ -75,7 +77,7 @@ bool Graph::haveCycle(int src)
 int main()
 {
     system("cls");
-    Graph g(8);
+    Graph g(4);
     g.addEdge(1, 2);
     g.addEdge(1, 3);
     g.addEdge(2, 4);
